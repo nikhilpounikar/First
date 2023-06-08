@@ -8,8 +8,26 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 
+var contactList = [
+    {
+        name: "Arpan",
+        phone: "1111111111"
+    },
+    {
+        name: "Tony Stark",
+        phone: "1234567890"
+    },
+    {
+        name: "Coding Ninjas",
+        phone: "12131321321"
+    }
+]
+
 app.get('/', function(req, res){
-    return res.render('home');
+    return res.render('home',{
+        title: "Contact List",
+        contact_list: contactList
+    });
 })
 
 
