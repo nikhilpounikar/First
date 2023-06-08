@@ -49,4 +49,17 @@ app.listen(port, function(err){
         console.log("Error in running the server", err);
     }
     console.log('Yup!My Server is running on Port', port);
-})
+});
+
+app.get('/delete-contact/', function(req, res){
+    console.log(req.query);
+    let phone = req.query.phone
+
+    let contactindex = contactList.findIndex(contact => contact.phone == phone);
+
+    if(contactindex != -1){
+        contactList.splice(contactindex, 1);
+    }
+
+    return res.redirect('back');
+});
