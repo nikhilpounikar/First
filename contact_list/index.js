@@ -6,8 +6,7 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
-
+app.use(express.urlencoded());
 var contactList = [
     {
         name: "Arpan",
@@ -28,6 +27,20 @@ app.get('/', function(req, res){
         title: "Contact List",
         contact_list: contactList
     });
+})
+
+app.get('/practice', function(req, res){
+    return res.render('practice',{
+        title: "Contact List",
+        contact_list: contactList
+    });
+})
+
+app.post('/create-contact', function(req, res){
+    //return res.redirect("/practice");
+    console.log(req.body);
+    contactList.push(req.body);
+    return res.redirect('/');
 })
 
 
