@@ -67,15 +67,24 @@ app.listen(port, function(err){
     console.log('Yup!My Server is running on Port', port);
 });
 
-app.get('/delete-contact/', function(req, res){
-    console.log(req.query);
-    let phone = req.query.phone
+app.get('/delete-contact', function(req, res){
+  // console.log(req.query);
+    let id = req.query.id
 
-    let contactindex = contactList.findIndex(contact => contact.phone == phone);
+    // let contactindex = contactList.findIndex(contact => contact.phone == phone);
 
-    if(contactindex != -1){
-        contactList.splice(contactindex, 1);
-    }
+    // if(contactindex != -1){
+    //     contactList.splice(contactindex, 1);
+    // }
 
-    return res.redirect('back');
+    Contact.findByIdAndDelete(id)
+    .then((data)=>{
+        console.log('deleted data is ',data);
+        return res.redirect('back');
+    }).catch((err) =>{
+        console.error(err);
+        return res.redirect('back');
+    })
+
+    
 });
