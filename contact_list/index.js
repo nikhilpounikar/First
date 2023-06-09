@@ -4,7 +4,7 @@ const port = 8000;
 
 const db = require('./config/mongoose');
 
-const contact = require('./models/contact');
+const Contact = require('./models/contact');
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -40,10 +40,15 @@ app.get('/practice', function(req, res){
 })
 
 app.post('/create-contact', function(req, res){
-    //return res.redirect("/practice");
-    console.log(req.body);
-    contactList.push(req.body);
-    return res.redirect('/');
+
+    Contact.create(req.body).then((newContact) =>{
+        console.log('Object saved successfully:', newContact);
+        return res.redirect('back');
+    }).catch((err) =>{
+        console.error(err);
+        return res.redirect('back');
+    })
+    
 })
 
 
