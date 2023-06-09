@@ -26,10 +26,18 @@ var contactList = [
 ]
 
 app.get('/', function(req, res){
-    return res.render('home',{
-        title: "Contact List",
-        contact_list: contactList
-    });
+
+    Contact.find()
+    .then((contacts)=>{
+        return res.render('home',{
+            title: "Contact List",
+            contact_list: contacts
+        });
+    })
+    .catch((err)=>{
+        console.error(err);
+    })
+    
 })
 
 app.get('/practice', function(req, res){
@@ -42,7 +50,7 @@ app.get('/practice', function(req, res){
 app.post('/create-contact', function(req, res){
 
     Contact.create(req.body).then((newContact) =>{
-        console.log('Object saved successfully:', newContact);
+        // console.log('Object saved successfully:', newContact);
         return res.redirect('back');
     }).catch((err) =>{
         console.error(err);
